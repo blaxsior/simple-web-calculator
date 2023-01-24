@@ -11,44 +11,33 @@ export class BTree<T> {
     }
 }
 
-type travFunc<T> = (target: CNod<T>) => any;
+type travFunc<T> = (target: CNod<T>) => void;
 
-export class BTTraverse<T> {
-    flist: travFunc<T>[];
-
-    constructor() {
-        this.flist = [];
-    }
-
-    addFunc(func: travFunc<T>) {
-        this.flist.push(func);
-    }
-
-    removeFunc(func: travFunc<T>) {
-        let idx = this.flist.indexOf(func);
-        if (idx !== -1) {
-            this.flist.splice(idx, 1);
-        }
-    }
-
+export class BTTraverse {
     // 전위 순회 VLR
-    preorderTrav<T>(nod: CNod<T>, func: travFunc<T>) {
+    static preorderTrav<T>(nod: CNod<T>, func: travFunc<T>) {
+        if(nod === null) return;
+
         func(nod);
         this.preorderTrav(nod!.lc, func);
         this.preorderTrav(nod!.rc, func);
     }
 
     // 중위 순회 LVR
-    inorderTrav<T>(nod: CNod<T>, func: travFunc<T>) {
-        this.preorderTrav(nod!.lc, func);
+    static inorderTrav<T>(nod: CNod<T>, func: travFunc<T>) {
+        if(nod === null) return;
+        
+        this.inorderTrav(nod!.lc, func);
         func(nod);
-        this.preorderTrav(nod!.rc, func);
+        this.inorderTrav(nod!.rc, func);
     }
 
     // 후위 순회 LRV
-    postorderTrav<T>(nod: CNod<T>, func: travFunc<T>) {
-        this.preorderTrav(nod!.lc, func);
-        this.preorderTrav(nod!.rc, func);
+    static postorderTrav<T>(nod: CNod<T>, func: travFunc<T>) {
+        if(nod === null) return;
+
+        this.postorderTrav(nod!.lc, func);
+        this.postorderTrav(nod!.rc, func);
         func(nod);
     }
 }
