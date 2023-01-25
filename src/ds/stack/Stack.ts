@@ -36,6 +36,13 @@ export class Stack<T> {
         return data;
     }
 
+    peak(): T {
+        if (this.top) {
+            return this.top.data;
+        }
+        throw new Error("there is no top to peak");
+    }
+
     get isEmpty(): boolean {
         return this.top === null;
     }

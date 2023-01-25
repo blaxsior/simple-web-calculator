@@ -1,19 +1,35 @@
-export type OpTokVal = '(' | ')' | '+' | '-' | '*' | '/';
+export type OpTokValue = '(' | ')' | '+' | '-' | '*' | '/';
+// export interface ValueTok extends CalTok {
+//     type: "val";
+// }
+
+// export interface OperatorTok extends CalTok {
+//     value:OpTokValue;
+//     type: "op";
+// }
+
+// export interface CalTok {
+//     value: string;
+//     type: string;
+// }
 
 export type ValueTok = {
-    value: number;
-    type: "val";
-}
+    type: "val",
+    value: string
+};
 
 export type OperatorTok = {
-    value: string;
-    type: "op"
+    type: "op",
+    value: OpTokValue
 }
 
-export type CalTok = ValueTok|OperatorTok;
+//코틀린의 sealed 같은게 있다면 타입 추론이 더 좋을텐데 싶다.
+//유사한 기능이 없으므로 type을 or 하는 방식으로 처리함.
+export type CalTok = ValueTok | OperatorTok;
 
 export class CalTokFunc {
-    static createCalTokList(target: string): readonly CalTok[] {
+    private static readonly OpList = ['(', ')', '+', '-', '*', '/'];
+    static createCalTokList(target: string, radix: number = 10): readonly CalTok[] {
         const values = target.split(" ");
         const tokens = [];
 
@@ -21,58 +37,30 @@ export class CalTokFunc {
             if (this.isOp(val)) { // 연산자라면
                 //연산자 토큰 만들기
                 const opTok: OperatorTok = {
-                    type:"op",
-                    value:val
+                    type: "op",
+                    value: val
                 };
                 tokens.push(opTok);
             }
-            else{ // 아니면 숫자 | 에러
-                try { // 숫자 토큰 만들기
-                    const num = parseInt(val);
-                    const numTok: ValueTok = {
-                        type:"val",
-                        value: num
-                    };
-                    tokens.push(numTok);
+            else { // 아니면 숫자 | 에러
+                if (!isNaN(parseInt(val, radix))) { // 숫자라면
+                    //숫자 토큰 만들기
+                    const valTok: ValueTok = {
+                        type: "val",
+                        value: val
+                    }
+                    tokens.push(valTok);
                 }
-                catch { // 에러 알림.
-                    throw new Error(`cannot tokenize ${val}`);
+                else { // 에러라면 알리기
+                    throw new Error(`cannot recognize token [ ${val} ]`);
                 }
             }
         }
 
         return tokens;
     }
-    static getOpPrec(val: string) {
-        switch (val) {
-            case '*':
-            case '/':
-                return 5;
-            case '+':
-            case '-':
-                return 3;
-            case '(':
-                return 1;
-            default:
-                return -1;
-        }
-    }
-
-    static isOp(op: string) {
-        return this.getOpPrec(op) > 0;
-    }
-
-    static whoPrecOp(op1: OperatorTok, op2: OperatorTok) {
-        const v1 = this.getOpPrec(op1.value);
-        const v2 = this.getOpPrec(op2.value);
-
-        switch (true) {
-            case v1 > v2:
-                return 1;
-            case v1 == v2:
-                return 0;
-            case v1 < v2:
-                return -1;
-        }
+    static isOp(val: string): val is OpTokValue {
+        // 하나라도 같은게 있다면 true
+        return this.OpList.some((op) => op === val);
     }
 }
