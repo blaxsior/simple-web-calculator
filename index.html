@@ -6,7 +6,6 @@
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <title>hello world</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <script type="module" src='/src/main.ts'></script>
 </head>
 
 <body>
@@ -14,7 +13,7 @@
     <input type="text" />
     <button>submit</button>
   </div>
-  <pre class="mermaid">
+  <pre class="mermaid" data-tree_name="main">
         graph TD
         1(Client)
         1 --> 2
@@ -28,6 +27,7 @@
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
     mermaid.initialize({ startOnLoad: true });
   </script>
+  <script type="module" src='/src/main.ts'></script>
 </body>
 
 </html>

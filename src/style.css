@@ -51,3 +51,14 @@ button:active {
     background-color: #f9f9f9;
   }
 }
+
+
+pre.mermaid:after {
+  content: attr(data-tree_name);
+  padding: 5px 3px;
+}
+
+pre.mermaid[data-tree_name='main'] {
+  outline: 3px auto gray;
+  margin: 10px;
+}
