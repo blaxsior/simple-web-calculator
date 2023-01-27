@@ -116,7 +116,7 @@ export class NotationConverter {
                 tokStack.push(nod); // 스택에 다시 넣기
             }
         }
-        
+
         const result = tokStack.pop(); // 생성된 트리
         if (!tokStack.isEmpty) { // 남은 노드가 존재하는 경우 에러가 난 것
             throw new Error("too much token"); // 에러 반환
@@ -126,11 +126,26 @@ export class NotationConverter {
     }
 
     /**
-     * 
+     * 토큰 트리를 전위표기법 형태로 변환
      * @param tree 대상이 되는 연산 트리
-     * @returns 중위표기법으로 표현된 식
+     * @returns 전위표기법으로 표현된 식
      */
-    static treeToPrefixStr(tree: BTNod<CalTok>): string {
+    static treeToprefixStr(tree: BTNod<CalTok>): string {
+        const VLRlist: string[] = [];
+        BTTraverse.preorderTrav(tree, (nod) => {
+            if (nod) {
+                VLRlist.push(nod.data.value);
+            }
+        });
+        return VLRlist.join(' ');
+    }
+
+    /**
+     * 토큰 트리를 중위표기법 형태로 변환
+     * @param tree 대상이 되는 연산 트리
+     * @returns 중위표현식으로 표현된 식
+     */
+    static treeToinfixStr(tree: BTNod<CalTok>): string {
         const LVRlist: string[] = [];
         BTTraverse.inorderTrav(tree, (nod) => {
             if (nod) {
@@ -150,5 +165,20 @@ export class NotationConverter {
                 }
             });
         return LVRlist.join(' ');
+    }
+    
+    /**
+     * 토큰 트리를 전위표기법 형태로 변환
+     * @param tree 대상이 되는 연산 트리
+     * @returns 전위표기법으로 표현된 식
+     */
+    static treeToPostfixStr(tree: BTNod<CalTok>): string {
+        const LRVlist: string[] = [];
+        BTTraverse.postorderTrav(tree, (nod) => {
+            if (nod) {
+                LRVlist.push(nod.data.value);
+            }
+        });
+        return LRVlist.join(' ');
     }
 }

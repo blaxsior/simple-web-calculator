@@ -9,48 +9,56 @@
 </head>
 
 <body>
-  <div>
-    <textarea id="input" placeholder="enter an infix expression"></textarea>
-    <button id="btn">submit</button>
+  <div class="container">
+    <div class="input-plane">
+      <textarea id="input" placeholder="format: num op num op ... no enter!!!"></textarea>
+      <button id="btn">submit</button>
+    </div>
+  
+    <div class="result-plane">
+      <div id="cal" class="result-content">
+        <span class="name">
+          result
+        </span>
+        <span id="cal" class="value">
+          1
+        </span>
+      </div>
+      <div id="prefix" class="result-content">
+        <span class="name">
+          prefix
+        </span>
+        <span id="prefix" class="value">
+          1
+        </span>
+      </div>
+      <div id="infix" class="result-content">
+        <span class="name">
+          infix
+        </span>
+        <span id="infix" class="value">
+          1
+        </span>
+      </div>
+      <div id="postfix" class="result-content">
+        <span class="name">
+          postfix
+        </span>
+        <span id="postfix" class="value">
+            111
+        </span>
+      </div>
+    </div>
   </div>
-  <div class="result-plane">
-    <div id="cal">
-      <span class="name">
-        result
-      </span>
-      <span class="value">
-        1
-      </span>
-    </div>
-    <div id="prefix">
-      <span class="name">
-        prefix
-      </span>
-      <span class="value">
-        1
-      </span>
-    </div>
-    <div id="infix">
-      <span class="name">
-        infix
-      </span>
-      1
-      <span class="value">
-      </span>
-    </div>
-    <div id="postfix">
-      <span class="name">
-        postfix
-      </span>
-      <span class="value">
-        1
-      </span>
-    </div>
-  </div>
+
   <pre class="mermaid" data-tree_name="tree view" id="tree">
     graph TD;0( default )
   </pre>
   <script type="module" src='/src/main.ts'></script>
+  <h3>사용법</h3>
+  <p>textarea에 사칙연산 수식을 입력하고 submit을 클릭한다.</p>
+  <p>식이 정상적인 경우 result, prefix, infix, postfix 및 tree view가 결과를 나타낸다.</p>
+  <p>만약 식이 정상적이지 않다면 결과로 'ERROR'을 얻는다.</p>
 </body>
 
 </html>

@@ -69,11 +69,66 @@ button:active {
 #input {
   text-overflow: ellipsis;
   resize:vertical;
-  width: 500px;
   font-size: 15px;
+  min-height: 2rem;
 }
 
 .result-plane {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
+  gap: 0.25rem;
+  background-color: #b1b1b1;
+  padding:0.2rem;
+  width:auto;
+
+  overflow: auto;
+  resize: vertical;
+}
+
+.result-content  {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 2px solid gray;
+  padding: 0.25rem;
+  background-color: white;
+}
+
+.result-content  .name {
+  border-right: 2px solid gray;
+  padding-right: 0.3rem;
+  text-align:center;
+  font-weight: 600;
+  color: gray;
+}
+
+.result-content .value {
+  text-align: end;
+}
+
+.input-plane {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.input-plane > textarea {
+  flex-grow: 1;
+}
+
+.container {
+  margin: 1rem;
+  padding: 1.5rem;
+  width: 400px;
+  min-height: min-content;
+  overflow: auto;
+
+  /* resize: vertical; */
+  background-color: rgb(206, 206, 206);
+  border-radius: 10px;
 }
