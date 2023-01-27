@@ -1,4 +1,4 @@
-export type OpTokValue = '(' | ')' | '+' | '-' | '*' | '/';
+export type OpTokValue = '(' | ')' | '+' | '-' | '*' | '/' | '%';
 // export interface ValueTok extends CalTok {
 //     type: "val";
 // }
@@ -28,10 +28,10 @@ export type OperatorTok = {
 export type CalTok = ValueTok | OperatorTok;
 
 export class CalTokFunc {
-    private static readonly OpList = ['(', ')', '+', '-', '*', '/'];
-    static createCalTokList(target: string, radix: number = 10): readonly CalTok[] {
-        const values = target.split(" ");
-        const tokens = [];
+    private static readonly OpList = ['(', ')', '+', '-', '*', '/', '%'];
+    static createCalTokList(target: string, radix: number = 10): TokenList {
+        const values = target.split(" ").filter(val => val);
+        const tokens = new TokenList();
 
         for (let val of values) {
             if (this.isOp(val)) { // 연산자라면
@@ -62,5 +62,27 @@ export class CalTokFunc {
     static isOp(val: string): val is OpTokValue {
         // 하나라도 같은게 있다면 true
         return this.OpList.some((op) => op === val);
+    }
+}
+
+export class TokenList extends Array<CalTok> {
+    // [Symbol.toPrimitive](hint: string) {
+    //     if(hint === 'number')
+    //     {
+    //         throw new Error("cannnot represent tokens as number");
+    //     }
+    //     if(hint === 'string')
+    //     {
+    //         // 토큰의 value를 꺼낸 후 공백 기준으로 나눠서 표현
+    //         return this.map((tok) => tok.value).join(' ');
+    //     }
+    //     else {
+    //         return null;
+    //     }
+    // }
+
+    toString(): string {
+            // 토큰의 value를 꺼낸 후 공백 기준으로 나눠서 표현
+            return this.map((tok) => tok.value).join(' ');
     }
 }

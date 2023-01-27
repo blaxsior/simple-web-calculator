@@ -10,23 +10,46 @@
 
 <body>
   <div>
-    <input type="text" />
-    <button>submit</button>
+    <textarea id="input" placeholder="enter an infix expression"></textarea>
+    <button id="btn">submit</button>
   </div>
-  <pre class="mermaid" data-tree_name="main">
-        graph TD
-        1(Client)
-        1 --> 2
-        2(Load Balancer)
-        2 --> 3
-        2 --> 4
-        3[Server1]
-        4[Server2]
-    </pre>
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: true });
-  </script>
+  <div class="result-plane">
+    <div id="cal">
+      <span class="name">
+        result
+      </span>
+      <span class="value">
+        1
+      </span>
+    </div>
+    <div id="prefix">
+      <span class="name">
+        prefix
+      </span>
+      <span class="value">
+        1
+      </span>
+    </div>
+    <div id="infix">
+      <span class="name">
+        infix
+      </span>
+      1
+      <span class="value">
+      </span>
+    </div>
+    <div id="postfix">
+      <span class="name">
+        postfix
+      </span>
+      <span class="value">
+        1
+      </span>
+    </div>
+  </div>
+  <pre class="mermaid" data-tree_name="tree view" id="tree">
+    graph TD;0( default )
+  </pre>
   <script type="module" src='/src/main.ts'></script>
 </body>
 

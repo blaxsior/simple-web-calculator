@@ -53,12 +53,27 @@ button:active {
 }
 
 
-pre.mermaid:after {
+#tree:after {
+  display:block;
+  text-align: center;
   content: attr(data-tree_name);
-  padding: 5px 3px;
+  padding: 3px;
+  border: 2px solid gray;
 }
 
-pre.mermaid[data-tree_name='main'] {
+#tree.mermaid[data-tree_name] {
   outline: 3px auto gray;
-  margin: 10px;
+  padding: 10px;
+}
+
+#input {
+  text-overflow: ellipsis;
+  resize:vertical;
+  width: 500px;
+  font-size: 15px;
+}
+
+.result-plane {
+  display: flex;
+  flex-flow: column wrap;
 }
