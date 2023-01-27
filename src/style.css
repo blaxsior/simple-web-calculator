@@ -132,3 +132,12 @@ button:active {
   background-color: rgb(206, 206, 206);
   border-radius: 10px;
 }
+
+.footer {
+  text-align: center;
+  display:flex;
+  flex-flow: column wrap;
+  width: 100%;
+  padding: 2rem 0 3rem 0;
+  background-color: #a6aaff;
+}

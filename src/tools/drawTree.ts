@@ -38,23 +38,3 @@ export function drawTree(tree: BTNod<CalTok>) {
 
 const drawChild = (cur: string, child: string) => `${cur} --> ${child}`;
 const nodN = (idx: number) => `n${idx}`;
-
-
-/**
- * @description 완전 이진트리에 대한 이름을 생성하는 함수 
- */
-function nodeNameGenerator() {
-    let count = 0;
-
-    return () => {
-        count++;
-        const left = 2 * count;
-        const right = 2 * count + 1;
-        // count++;
-        return {
-            cur: `n${count}`,
-            left: `n${left}`,
-            right: `n${right}`
-        }
-    }
-}

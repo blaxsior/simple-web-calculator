@@ -1,15 +1,4 @@
-import { BTNod, CNod } from "./BTNod";
-
-export class BTree<T> {
-    private root?: BTNod<T>
-
-    constructor() {
-
-    }
-
-    addc() {
-    }
-}
+import { CNod } from "./BTNod";
 
 type travFunc<T> = (target: CNod<T>) => void;
 type BFFunc<T> = (target: CNod<T>) => void;

@@ -1,4 +1,3 @@
-import './style.css';
 import { drawTree } from './tools/drawTree';
 import { NotationConverter } from './tools/NotationConverter';
 import mermaid from 'mermaid';
@@ -31,12 +30,15 @@ function main() {
   if (submitBtn) {
     submitBtn.addEventListener('click', () => {
       const input = document.querySelector('#input') as HTMLInputElement;
+      const radix_input = document.querySelector('#radix') as HTMLInputElement;
+      const check = parseInt(radix_input.value);
+      const radix =  !isNaN(check) && check >=2 ? check : 10; // 기본 값은 10
 
       if (input && input.value.length > 0) {
         let tree: BTNod<CalTok>;
         let tokList: TokenList;
         try {
-          tokList = NotationConverter.InToPost(input.value ?? " ");
+          tokList = NotationConverter.InToPost(input.value ?? " ", radix);
           tree = NotationConverter.postToTree(tokList);
         }
         catch {
@@ -46,7 +48,12 @@ function main() {
           return;
         }
 
-        const result_str = Calculator.calPostfix(tokList);
+        let result_str = Calculator.calPostfix(tokList, radix);
+        if(radix !== 10)
+        {
+          const result_str10 = parseInt(result_str, radix);
+          result_str += `<sub>(${radix})</sub> | ${result_str10}<sub>(10)</sub>`;
+        }
         const prefix_str = NotationConverter.treeToprefixStr(tree);
         const infix_str = NotationConverter.treeToinfixStr(tree);
         const postfix_str = NotationConverter.treeToPostfixStr(tree);
@@ -54,7 +61,7 @@ function main() {
         const result_list: string[] = [result_str, prefix_str, infix_str, postfix_str]; // elem들에 나타낼 값들.
 
         elem_list.forEach((elem, idx) => {
-          elem.textContent = result_list[idx];
+          elem.innerHTML = result_list[idx];
         });
 
         const target = document.querySelector('#tree');

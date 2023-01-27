@@ -4,19 +4,28 @@
 <head>
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>hello world</title>
+  <title>웹 기반 계산기</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+  <script type="module" crossorigin src="./src/main.ts"></script>
+  <link rel="stylesheet" href="./src/style.css">
 </head>
 
 <body>
+  <h1>Change Infix to Other Notation</h1>
+  <h2>중위표기법 사칙연산 및 변환기</h2>
   <div class="container">
+    <div>
+      <span>radix</span>
+      <input id="radix" type="number" min="2" step="1" value="10" max="16" />
+    </div>
     <div class="input-plane">
       <textarea id="input" placeholder="format: num op num op ... no enter!!!"></textarea>
       <button id="btn">submit</button>
     </div>
-  
+
     <div class="result-plane">
-      <div id="cal" class="result-content">
+      <div id="cal-elem" class="result-content">
         <span class="name">
           result
         </span>
@@ -24,7 +33,7 @@
           1
         </span>
       </div>
-      <div id="prefix" class="result-content">
+      <div id="prefix-elem" class="result-content">
         <span class="name">
           prefix
         </span>
@@ -32,7 +41,7 @@
           1
         </span>
       </div>
-      <div id="infix" class="result-content">
+      <div id="infix-elem" class="result-content">
         <span class="name">
           infix
         </span>
@@ -40,12 +49,12 @@
           1
         </span>
       </div>
-      <div id="postfix" class="result-content">
+      <div id="postfix-elem" class="result-content">
         <span class="name">
           postfix
         </span>
         <span id="postfix" class="value">
-            111
+          111
         </span>
       </div>
     </div>
@@ -54,11 +63,78 @@
   <pre class="mermaid" data-tree_name="tree view" id="tree">
     graph TD;0( default )
   </pre>
-  <script type="module" src='/src/main.ts'></script>
+
   <h3>사용법</h3>
-  <p>textarea에 사칙연산 수식을 입력하고 submit을 클릭한다.</p>
-  <p>식이 정상적인 경우 result, prefix, infix, postfix 및 tree view가 결과를 나타낸다.</p>
-  <p>만약 식이 정상적이지 않다면 결과로 'ERROR'을 얻는다.</p>
+  <ol>
+    <li>
+      <p>textarea에 사칙연산 수식을 입력하고 submit을 클릭한다.</p>
+      <p>수식은 숫자 및 연산자를 스페이스바로 구분해서 작성한다.</p>
+      <p>radix의 값을 2 ~ 16(혹은 이상)으로 변경하여 다양한 진법을 이용 가능하다.</p>
+      <p><span style="color:red">※ 내부적으로 parseInt을 이용</span>하고 있으므로, 각 진법의 정수 숫자를 입력한다.</p>
+    </li>
+    <li>
+      <p>식이 정상적인 경우 result, prefix, infix, postfix 및 tree view가 결과를 나타낸다.</p>
+    </li>
+    <li>
+      <p>만약 식이 정상적이지 않다면 결과로 <span style="color: red; font-weight: 600">ERROR</span>을 얻는다.</p>
+    </li>
+  </ol>
+
+  <ul>
+    <li>
+      <p>중위표기법(infix)으로 작성된 식에 대해 사칙연산을 수행</p>
+    </li>
+    <li>
+      <p>연산 결과(result), 전위표기(prefix), 중위표기(infix), 후위표기(postfix) 및 수식 트리(postfix)를 출력</p>
+    </li>
+  </ul>
+  <h3>동작 방식</h3>
+  <ul>
+    <li>
+      <p>입력한 문자열을 스페이스바 기준으로 토큰화.</p>
+      <p>토큰의 종류</p>
+      <ul>
+        <li>
+          <p>OperatorTok: (, ), +, -, *, /, %</p>
+        </li>
+        <li>
+          <p>ValueTok: parseInt(number, radix) !== NaN인 숫자</p>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <p>생성한 토큰 리스트를 후위표기법에 준하는 순서로 배열</p>
+    </li>
+
+    <li>
+      <p>후위표기법 순서로 나열된 토큰 리스트를 트리로 변환</p>
+    </li>
+    <li>
+      <p>결과물</p>
+      <ul>
+        <li>
+          <p>result: 토큰 리스트를 스택 기반으로 연산</p>
+        </li>
+        <li>
+          <p>prefix: 트리를 prefix(VLR) 순회</p>
+        </li>
+        <li>
+          <p>infix: 트리를 infix(LVR) 순회</p>
+        </li>
+        <li>
+          <p>postfix: 트리를 postfix(LRV) 순회</p>
+        </li>
+        <li>
+          <p>tree view: 트리를 BFS 방식으로 순회</p>
+          <p><strong><a href='https://mermaid.js.org/'>mermaid</a></strong> 라이브러리 표기법으로 트리를 표현</p>
+          <p>표현된 문자열을 mermaid.render(~) 함수를 이용하여 그림으로 변환 <strong><a href="https://github.com/blaxsior/simple-web-calculator/blob/master/src/main.ts#L66">[코드]</a></strong></p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <div class="footer">
+    <div>github 주소: <a href="https://github.com/blaxsior/simple-web-calculator">https://github.com/blaxsior/simple-web-calculator</a></div>
+  </div>
 </body>
 
 </html>
