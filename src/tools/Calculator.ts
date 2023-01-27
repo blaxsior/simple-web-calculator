@@ -9,7 +9,7 @@ export class Calculator {
      * @description 후위 표기법 형태의 연산식을 계산하여 결과를 반환한다.
      * @param tokens 연산 대상. 후위 표기법 순서를 가진 TokenList
      * @param radix 연산식에 적용할 진법
-     * @returns 사칙연산 결과
+     * @returns 사칙연산 결과(10진수 기준)
      */
     static calPostfix(tokens: TokenList, radix: number = 10) {
         const valStack = new Stack<number>();// value 값들을 임시로 저장하는 스택
@@ -22,7 +22,7 @@ export class Calculator {
             else if(tok.type === 'op') { // 토큰 타입이 연산자라면
                 const val2 = valStack.pop();
                 const val1 = valStack.pop();
-
+                console.log(tok.value);
                 switch(tok.value)
                 {
                     case '+':
@@ -36,6 +36,9 @@ export class Calculator {
                         break;
                     case '/':
                         valStack.push(val1/val2);
+                        break;
+                    case '%':
+                        valStack.push(val1 % val2);
                         break;
                     default:
                         throw new Error("undesirable operator")
@@ -51,7 +54,7 @@ export class Calculator {
         if(!valStack.isEmpty) {
             throw new Error("too much value")
         }
-        return result.toString(radix);
+        return result;
     }
 
     /**

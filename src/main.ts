@@ -48,10 +48,11 @@ function main() {
           return;
         }
 
-        let result_str = Calculator.calPostfix(tokList, radix);
+        let result = Calculator.calPostfix(tokList, radix);
+        let result_str = result.toString(radix);
         if(radix !== 10)
         {
-          const result_str10 = parseInt(result_str, radix);
+          const result_str10 = result.toString(10);
           result_str += `<sub>(${radix})</sub> | ${result_str10}<sub>(10)</sub>`;
         }
         const prefix_str = NotationConverter.treeToprefixStr(tree);
